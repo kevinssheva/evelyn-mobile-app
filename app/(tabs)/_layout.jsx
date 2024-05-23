@@ -1,22 +1,34 @@
 import { Tabs } from "expo-router";
-import React from "react";
+
+import { View } from "react-native";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import ScreenHeaderBtn from "@/components/navigation/ScreenHeaderBtn";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
         tabBarActiveTintColor: "#6823A8",
         tabBarShowLabel: false,
         tabBarStyle: {
           height: 72,
         },
+        headerTitle: "",
+        headerRight: () => (
+          <View className="flex-row items-end justify-center pr-2">
+            <ScreenHeaderBtn
+              name="shopping-bag"
+              handlePress={() => {}}
+              styles={"mx-2"}
+            />
+            <ScreenHeaderBtn
+              name="inbox"
+              handlePress={() => {}}
+              styles={"mx-2"}
+            />
+          </View>
+        ),
       }}
     >
       <Tabs.Screen
