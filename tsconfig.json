@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/(tabs)/marketplace.jsx", "app/(tabs)/explore.jsx", "app/(tabs)/_layout.jsx", "components/navigation/TabBarIcon.jsx", "app/_layout.jsx", "components/navigation/ScreenHeaderBtn.jsx"  ]
+, "app/(tabs)/marketplace.jsx", "app/(tabs)/explore.jsx", "app/(tabs)/_layout.jsx", "components/navigation/TabBarIcon.jsx", "app/_layout.jsx", "components/navigation/ScreenHeaderBtn.jsx", "components/Checkbox.jsx"  ]
 }
