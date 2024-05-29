@@ -1,11 +1,18 @@
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 
 import { View } from "react-native";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import ScreenHeaderBtn from "@/components/navigation/ScreenHeaderBtn";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 export default function TabLayout() {
+  const { isLogged } = useGlobalContext();
+
+  if (!isLogged) {
+    return <Redirect href="/sign-in" />;
+  }
+
   return (
     <Tabs
       screenOptions={{

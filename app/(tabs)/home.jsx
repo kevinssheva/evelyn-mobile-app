@@ -1,8 +1,10 @@
 import { View, Text, ScrollView, Image } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import images from "../../constants/images";
 import ProductCard from "../../components/home/ProductCard";
 import StoryCard from "../../components/home/StoryCard";
+import { FIREBASE_AUTH } from "../../config/FirebaseConfig";
+import { useRouter } from "expo-router";
 
 const trendingData = [
   {
@@ -59,6 +61,18 @@ const storyData = [
 ];
 
 const Home = () => {
+  const router = useRouter();
+  const auth = FIREBASE_AUTH;
+
+  //check signed in user, if there's no user, redirect to sign in page
+  useEffect(() => {
+    if (!auth.currentUser) {
+      router.push("/sign-in");
+    }
+
+    console.log("auth.currentUser", auth.currentUser);
+  }, []);
+
   return (
     <ScrollView className="h-full bg-white">
       <View className="w-full">
