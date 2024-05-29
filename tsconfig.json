@@ -1,17 +1,4 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true,
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "app/(tabs)/marketplace.jsx", "app/(tabs)/explore.jsx", "app/(tabs)/_layout.jsx", "components/navigation/TabBarIcon.jsx", "app/_layout.jsx", "components/navigation/ScreenHeaderBtn.jsx"  ]
+  "compilerOptions": {},
+  "extends": "expo/tsconfig.base"
 }
