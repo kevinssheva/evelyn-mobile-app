@@ -1,12 +1,195 @@
-import { View, Text } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import React from "react";
 import { useLocalSearchParams } from "expo-router";
 
 const ProductDetails = () => {
   const { id } = useLocalSearchParams();
+  const star = Array(5).fill(require("../../assets/images/star.png"));
+
   return (
-    <View>
-      <Text>Product ke {id}</Text>
+    <View className="flex-1">
+      <ScrollView>
+        <Image
+          source={require("../../assets/images/discover_ungu.png")}
+          className="h-[30vh] w-full"
+          resizeMode="cover"
+        />
+        <View className="flex-row justify-center mt-[2vh]">
+          <View className="h-1 w-[10vw] bg-[#D9D9D9]"></View>
+        </View>
+        <View className="px-[6vw] py-[2vh]">
+          <View className="flex-row w-full justify-between items-center">
+            <View className="flex-col h-full">
+              <Text className="font-bold text-[24px] text-black">Cookies</Text>
+              <Text className="font-light text-[16px] text-black">
+                1795 reviews
+              </Text>
+            </View>
+            <View className="flex-row items-end">
+              <Text className="font-bold text-[24px] text-black">$5</Text>
+              <Text className="font-bold text-[14px] text-[#9F948B]">/pc</Text>
+            </View>
+          </View>
+          <View className="flex-row w-full justify-between items-center">
+            <View className="flex-row gap-2 mt-[2px]">
+              {star.map((image, index) => (
+                <Image
+                  key={index}
+                  source={image}
+                  className="h-[2vh] w-[4vw]"
+                  resizeMode="contain"
+                />
+              ))}
+            </View>
+            <Text className="font-regular text-[14px] text-[#969595]">
+              Stock: 300
+            </Text>
+          </View>
+
+          <View className="flex-col w-full mt-[2.5vh]">
+            <Text className="font-bold text-[20px] text-black mb-[1vh]">
+              Description
+            </Text>
+            <Text className="font-regular text-[14px] text-black">
+              Heavenly Bites Cookies are unmatched delights in every bite.
+              Crafted with love and care, each of our recipes is perfected to
+              provide a palate-pampering experience. Every soft chocolate chip
+              melts in your mouth, blending perfect sweetness with the gentle
+              sensation of the cookie. We use only the finest quality
+              ingredients... see more
+            </Text>
+          </View>
+
+          <View className="flex-col w-full mt-[3vh]">
+            <Text className="font-bold text-[20px] text-black mb-[1vh]">
+              About the Seller
+            </Text>
+            <View className="flex-col px-[4vw] py-[2vh] w-full bg-[#DBFFDA] rounded-[10px]">
+              <View className="flex-row">
+                <Image
+                  source={require("../../assets/images/discover_ungu.png")}
+                  className="h-[10vh] w-[10vh] rounded-[100px]"
+                  resizeMode="cover"
+                />
+                <View className="flex-col w-full ml-5 justify-center">
+                  <Text className="font-bold text-[20px]">Anna Marshall</Text>
+                  <Text className="font-regular text-[12px]">
+                    Bandung, Indonesia
+                  </Text>
+                  <Text className="font-regular text-[10px] text-[#969595]">
+                    Member since 2018
+                  </Text>
+                </View>
+              </View>
+              <Text className="font-regular text-[12px] text-black mt-4">
+                Anna Marshall is a resilient and determined woman who moved to
+                Indonesia from India seven years ago. Born in Massachusets, Anna
+                was diagnosed with a mobility impairment due to a spinal injury
+                from a car accident in her early twenties. Despite the
+                challenges, she pursued her education in culinary arts and had
+                always been passionate about exploring different cultures
+                cuisine.
+              </Text>
+            </View>
+          </View>
+
+          <View className="flex-col w-full mt-[3vh]">
+            <Text className="font-bold text-[20px] text-black mb-[1vh]">
+              Reviews
+            </Text>
+            <View className="flex-row justify-between">
+              <View className="flex-col items-center">
+                <Text className="font-bold text-[20px]">5.0 stars</Text>
+                <View className="flex-row gap-2 mt-[2px] mb-[10px]">
+                  {star.map((image, index) => (
+                    <Image
+                      key={index}
+                      source={image}
+                      className="h-[2vh] w-[4vw]"
+                      resizeMode="contain"
+                    />
+                  ))}
+                </View>
+                <Text className="font-bold text-[14px] text-[#969595]">
+                  1,375 reviews
+                </Text>
+              </View>
+
+              <View className="flex-col">
+                <View className="flex-row items-center">
+                  <Text className="font-regular text-[12px] mr-3">5</Text>
+                  <View className="h-[4px] w-[40vw] bg-[#FFDF00] rounded-[5px]"></View>
+                </View>
+                <View className="flex-row items-center">
+                  <Text className="font-regular text-[12px] mr-3">4</Text>
+                  <View className="h-[4px] w-[40vw] bg-[#D9D9D9] rounded-[5px]"></View>
+                </View>
+                <View className="flex-row items-center">
+                  <Text className="font-regular text-[12px] mr-3">3</Text>
+                  <View className="h-[4px] w-[40vw] bg-[#D9D9D9] rounded-[5px]"></View>
+                </View>
+                <View className="flex-row items-center">
+                  <Text className="font-regular text-[12px] mr-3">2</Text>
+                  <View className="h-[4px] w-[40vw] bg-[#D9D9D9] rounded-[5px]"></View>
+                </View>
+                <View className="flex-row items-center">
+                  <Text className="font-regular text-[12px] mr-3">1</Text>
+                  <View className="h-[4px] w-[40vw] bg-[#D9D9D9] rounded-[5px]"></View>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View>
+            <View className="flex-col">
+              {star.map((image, index) => (
+                <View key={index} className="flex-col mt-2">
+                  <View className="flex-row justify-between items-center">
+                    <View className="flex-row">
+                      <Image
+                        source={require("../../assets/images/discover_ungu.png")}
+                        className="h-[7vh] w-[7vh] rounded-[100px]"
+                        resizeMode="cover"
+                      />
+                      <View className="flex-col justify-center ml-5">
+                        <Text className="font-bold text-[14px]">
+                          Rita Arnold
+                        </Text>
+                        <Text className="font-regular text-[10px] text-[#969595]">
+                          234 reviews
+                        </Text>
+                      </View>
+                    </View>
+                    <View className="flex-row gap-2 mt-[2px] mb-[10px]">
+                      {star.map((image, index) => (
+                        <Image
+                          key={index}
+                          source={image}
+                          className="h-[2vh] w-[4vw]"
+                          resizeMode="contain"
+                        />
+                      ))}
+                    </View>
+                  </View>
+                  <Text className="font-regular text-[12px] mt-2 mb-2">
+                    Amazing. The seller was very friendly. The cookies were
+                    amazing. etc etc etc
+                  </Text>
+                  <View className="h-[1px] w-full bg-gray-300"></View>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          <View className="flex-row justify-center mt-2">
+            <Text>see more reviews </Text>
+            <Text>{">"}</Text>
+          </View>
+        </View>
+      </ScrollView>
+      <View className="fixed bottom-0 bg-blue-900 w-full h-[7vh] items-center justify-center">
+        <Text className="font-bold text-[18px] text-white">Add to Cart</Text>
+      </View>
     </View>
   );
 };
