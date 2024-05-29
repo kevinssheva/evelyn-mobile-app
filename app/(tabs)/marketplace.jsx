@@ -1,97 +1,57 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Button,
-  Input,
-  TextInput,
-  FlatList,
-  Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import SearchBar from "../../components/search";
+import ProductCard from "../../components/home/ProductCard";
 
 const Marketplace = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
   const a = [1, 2, 3, 4, 5];
+
   const products = [
     {
       productId: 1,
-      name: "Product 1",
-      sellerName: "Seller A",
+      title: "Product 1",
+      owner: "Seller A",
       price: 10,
-      imagePath: "https://example.com/product1.jpg",
+      photoUrl: "https://picsum.photos/200",
     },
     {
       productId: 2,
-      name: "Product 2",
-      sellerName: "Seller B",
+      title: "Product 2",
+      owner: "Seller B",
       price: 20,
-      imagePath: "https://example.com/product2.jpg",
+      photoUrl: "https://picsum.photos/200",
     },
     {
       productId: 3,
-      name: "Product 3",
-      sellerName: "Seller C",
+      title: "Product 3",
+      owner: "Seller C",
       price: 30,
-      imagePath: "https://example.com/product3.jpg",
+      photoUrl: "https://picsum.photos/200",
     },
     // Add more dummy product data as needed
   ];
+
   return (
-    <View className="px-[6vw] py-[3vh]">
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <Text className="text-black font-bold text-[18px] mb-[2vh]">For You</Text>
-      <View className="h-[25vh]">
-        <FlatList
-          horizontal
-          data={products}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("ProductDetail", {
-                  productId: item.productId,
-                })
-              }
-              className="mx-2 p-2 border border-gray-200 rounded-lg"
-            >
-              <View className="items-center">
-                <Image
-                  source={require("../../assets/images/icon.png")}
-                  className="h-[12.5vh] w-[25vw]"
-                  resizeMode="cover"
-                />
-                <View className="mt-2 w-full">
-                  <Text
-                    className="text-black font-bold text-lg"
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                  >
-                    {item.name}
-                  </Text>
-                  <Text
-                    className="text-black font-medium text-sm"
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                  >
-                    {item.sellerName}
-                  </Text>
-                  <Text className="text-black font-bold text-lg">
-                    ${item.price}
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.productId.toString()}
-        />
+    <ScrollView>
+      <View className="px-[6vw] pt-[3vh]">
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       </View>
+      <Text className="text-black font-bold text-[18px] mb-[2vh] mx-[6vw]">
+        For You
+      </Text>
+      <ScrollView horizontal={true}>
+        <View className="w-6" />
+        {products.map((product, index) => (
+          <ProductCard key={index} product={product} />
+        ))}
+      </ScrollView>
       <TouchableOpacity
         onPress={() => router.push("/10")}
-        className="mt-[2vh] rounded-[10px] mb-[2vh]"
+        className="mt-[2vh] rounded-[10px] mb-[2vh] w-full px-[6vw]"
       >
         <Image
           source={require("../../assets/images/discover_ungu.png")}
@@ -99,13 +59,17 @@ const Marketplace = () => {
           resizeMode="cover"
         />
       </TouchableOpacity>
-      <Text className="text-black font-bold text-[18px] mb-[2vh]">
+      <Text className="text-black font-bold text-[18px] mb-[2vh] mx-[6vw]">
         Handicrafts
       </Text>
-      <TouchableOpacity onPress={() => router.push("/10")}>
-        <Text>Go To Product 1</Text>
-      </TouchableOpacity>
-    </View>
+
+      <ScrollView horizontal={true}>
+        <View className="w-6" />
+        {products.map((product, index) => (
+          <ProductCard key={index} product={product} />
+        ))}
+      </ScrollView>
+    </ScrollView>
   );
 };
 

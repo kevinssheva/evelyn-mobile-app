@@ -1,13 +1,92 @@
-import { View, Text, Image, ScrollView } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Button,
+} from "react-native";
+import React, { useState } from "react";
+import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
+import Modal from "react-native-modal";
 
 const ProductDetails = () => {
   const { id } = useLocalSearchParams();
+  const router = useRouter();
   const star = Array(5).fill(require("../../assets/images/star.png"));
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [count, setCount] = useState(1);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const handleAddToCart = () => {
+    setModalVisible(!isModalVisible);
+    setCount(1);
+  };
+
+  const handleDecrement = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    }
+  };
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
 
   return (
     <View className="flex-1">
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={() => setModalVisible(false)}
+      >
+        <View>
+          <View className="bg-white rounded-t-[10px] px-[6vw] py-[2vh] flex-row">
+            <Image
+              source={require("../../assets/images/discover_ungu.png")}
+              className="h-[17vh] w-[35vw]"
+              resizeMode="cover"
+            />
+            <View className="flex-col ml-5 justify-between">
+              <View>
+                <Text className="font-bold text-[20px]">Cookies</Text>
+                <Text className="font-regular text-[14px]">Stock: 30</Text>
+              </View>
+              <View className="flex-row gap-3 items-center">
+                <TouchableOpacity
+                  className="h-[7vw] w-[7vw] border-[#072389] border-[1px] rounded-[3px] flex-row items-center justify-center"
+                  onPress={handleDecrement}
+                >
+                  <Text className="flex font-bold text-[18px] text-[#072389]">
+                    -
+                  </Text>
+                </TouchableOpacity>
+                <Text className="font-bold text-[16px]">{count}</Text>
+                <TouchableOpacity
+                  className="h-[7vw] w-[7vw] border-[#072389] border-[1px] rounded-[3px] flex-row items-center justify-center"
+                  onPress={handleIncrement}
+                >
+                  <Text className="flex font-bold text-[18px] text-[#072389]">
+                    +
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          <TouchableOpacity
+            onPress={handleAddToCart}
+            className="bg-blue-900 w-full h-[7vh] items-center justify-center"
+          >
+            <Text className="font-bold text-[18px] text-white">
+              Add to Cart
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
       <ScrollView>
         <Image
           source={require("../../assets/images/discover_ungu.png")}
@@ -187,9 +266,13 @@ const ProductDetails = () => {
           </View>
         </View>
       </ScrollView>
-      <View className="fixed bottom-0 bg-blue-900 w-full h-[7vh] items-center justify-center">
+
+      <TouchableOpacity
+        onPress={toggleModal}
+        className="fixed bottom-0 bg-blue-900 w-full h-[7vh] items-center justify-center"
+      >
         <Text className="font-bold text-[18px] text-white">Add to Cart</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
