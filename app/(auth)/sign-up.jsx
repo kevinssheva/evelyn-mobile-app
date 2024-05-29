@@ -5,6 +5,8 @@ import FormField from "../../components/FormField";
 import Checkbox from "../../components/Checkbox";
 import { HelloWave } from "../../components/HelloWave";
 import { Link } from "expo-router";
+import { FIREBASE_AUTH } from "../../config/FirebaseConfig";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const SignUp = () => {
   const [userInput, setUserInput] = useState({
@@ -17,7 +19,29 @@ const SignUp = () => {
     setUserInput({ ...userInput, [key]: value });
   };
 
-  const handleSubmit = () => {};
+  const auth = FIREBASE_AUTH;
+
+  const handleSubmit = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        userInput.email,
+        userInput.password
+      );
+      
+      const user = userCredential.user;
+
+      await updateProfile(user, {
+        displayName: userInput.name,
+      });
+
+      console.log(user);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
 
   return (
     <SafeAreaView className="bg-slate-100 h-full">
@@ -57,7 +81,10 @@ const SignUp = () => {
           </View>
 
           <View>
-            <TouchableOpacity className="bg-purple-800 py-3 rounded-xl items-center justify-center" onPress={handleSubmit}>
+            <TouchableOpacity
+              className="bg-purple-800 py-3 rounded-xl items-center justify-center"
+              onPress={handleSubmit}
+            >
               <Text className="text-white font-isemibold text-base">
                 Sign Up
               </Text>
