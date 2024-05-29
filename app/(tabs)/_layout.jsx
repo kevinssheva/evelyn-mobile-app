@@ -4,8 +4,10 @@ import { View } from "react-native";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import ScreenHeaderBtn from "@/components/navigation/ScreenHeaderBtn";
+import { useRouter } from "expo-router";
 
 export default function TabLayout() {
+  const router = useRouter();
   return (
     <Tabs
       screenOptions={{
@@ -19,7 +21,7 @@ export default function TabLayout() {
           <View className="flex-row items-end justify-center pr-2">
             <ScreenHeaderBtn
               name="shopping-bag"
-              handlePress={() => {}}
+              handlePress={() => router.push("/cart")}
               styles={"mx-2"}
             />
             <ScreenHeaderBtn
