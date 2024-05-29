@@ -9,44 +9,6 @@ const Marketplace = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const a = [1, 2, 3, 4, 5];
-  const trendingData = [
-    {
-      photoUrl: "https://picsum.photos/200",
-      title: "Product 1",
-      price: 200,
-      owner: "John Doe",
-    },
-    {
-      photoUrl: "https://picsum.photos/200",
-      title: "Product 2",
-      price: 300,
-      owner: "Jane Doe",
-    },
-    {
-      photoUrl: "https://picsum.photos/200",
-      title: "Product 3",
-      price: 400,
-      owner: "John Doe",
-    },
-    {
-      photoUrl: "https://picsum.photos/200",
-      title: "Product 4",
-      price: 500,
-      owner: "Jane Doe",
-    },
-    {
-      photoUrl: "https://picsum.photos/200",
-      title: "Product 5",
-      price: 600,
-      owner: "John Doe",
-    },
-    {
-      photoUrl: "https://picsum.photos/200",
-      title: "Product 6",
-      price: 700,
-      owner: "Jane Doe",
-    },
-  ];
 
   const products = [
     {
@@ -81,14 +43,12 @@ const Marketplace = () => {
       <Text className="text-black font-bold text-[18px] mb-[2vh] mx-[6vw]">
         For You
       </Text>
-      <View className="h-[25vh]">
-        <ScrollView horizontal={true}>
-          <View className="w-6" />
-          {trendingData.map((product, index) => (
-            <ProductCard key={index} product={product} />
-          ))}
-        </ScrollView>
-      </View>
+      <ScrollView horizontal={true}>
+        <View className="w-6" />
+        {products.map((product, index) => (
+          <ProductCard key={index} product={product} />
+        ))}
+      </ScrollView>
       <TouchableOpacity
         onPress={() => router.push("/10")}
         className="mt-[2vh] rounded-[10px] mb-[2vh] w-full px-[6vw]"
@@ -102,14 +62,13 @@ const Marketplace = () => {
       <Text className="text-black font-bold text-[18px] mb-[2vh] mx-[6vw]">
         Handicrafts
       </Text>
-      <View className="h-[25vh]">
-        <ScrollView horizontal={true}>
-          <View className="w-6" />
-          {trendingData.map((product, index) => (
-            <ProductCard key={index} product={product} />
-          ))}
-        </ScrollView>
-      </View>
+
+      <ScrollView horizontal={true}>
+        <View className="w-6" />
+        {products.map((product, index) => (
+          <ProductCard key={index} product={product} />
+        ))}
+      </ScrollView>
     </ScrollView>
   );
 };
