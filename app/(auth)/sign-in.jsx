@@ -5,6 +5,8 @@ import FormField from "../../components/FormField";
 import Checkbox from "../../components/Checkbox";
 import { HelloWave } from "../../components/HelloWave";
 import { Link } from "expo-router";
+import { FIREBASE_AUTH } from "../../config/FirebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignIn = () => {
   const [userInput, setUserInput] = useState({
@@ -16,7 +18,22 @@ const SignIn = () => {
     setUserInput({ ...userInput, [key]: value });
   };
 
-  const handleSubmit = () => {};
+  const auth = FIREBASE_AUTH;
+
+  const handleSubmit = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        userInput.email,
+        userInput.password
+      );
+      
+      const user = userCredential.user;
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <SafeAreaView className="bg-slate-100 h-full">
       <ScrollView>
