@@ -12,6 +12,9 @@ import { useLocalSearchParams } from "expo-router";
 import Modal from "react-native-modal";
 import { GetProductById } from "../../services/ProductService";
 import { formatNumberToK } from "../../utils/currency";
+import { addToCart } from "../../services/CartService";
+import { FIREBASE_AUTH } from "../../config/firebaseConfig";
+import Toast from "react-native-toast-message";
 import { Octicons } from "@expo/vector-icons";
 
 const testimoniData = [
@@ -41,12 +44,12 @@ const testimoniData = [
 const ProductDetails = () => {
   const { id } = useLocalSearchParams();
   const { product, loading } = GetProductById(id);
+  const auth = FIREBASE_AUTH;
   const router = useRouter();
   const star = Array(5).fill(require("../../assets/images/star.png"));
   const [isModalVisible, setModalVisible] = useState(false);
   const [count, setCount] = useState(1);
 
-  // kalo loading, return view kosong aja
   if (loading) {
     return <ActivityIndicator size="large" color="#741CCB" />;
   }
@@ -55,7 +58,23 @@ const ProductDetails = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    try {
+      await addToCart(auth.currentUser.uid, product.id, count, product.price);
+      Toast.show({
+        type: "success",
+        text1: "Product added to cart",
+        text2: "Product has been successfully added to your cart",
+      });
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Failed to add product",
+        text2: error,
+      });
+    }
+
     setModalVisible(!isModalVisible);
     setCount(1);
   };
@@ -141,7 +160,7 @@ const ProductDetails = () => {
             </View>
             <View className="flex-row items-end">
               <Text className="font-ibold text-[20px] text-black">
-                Rp. {formatNumberToK(product.price)}
+                Rp {formatNumberToK(product.price)}
               </Text>
               <Text className="font-bold text-[14px] text-[#9F948B]">/pc</Text>
             </View>
