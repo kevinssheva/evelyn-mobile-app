@@ -7,7 +7,6 @@ const JobDisplay = ({ job }) => {
   const router = useRouter();
 
   const disabilityArray = job.disabilityType.split(", ");
-  console.log(disabilityArray)
 
   return (
     <TouchableOpacity
