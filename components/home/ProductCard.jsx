@@ -1,6 +1,8 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
+import { formatNumberToK } from "../../utils/currency";
+import { Ionicons } from "@expo/vector-icons";
 
 const ProductCard = ({ product }) => {
   const router = useRouter();
@@ -19,29 +21,29 @@ const ProductCard = ({ product }) => {
     return formattedAmount;
   };
 
-  console.log(product)
-
   return (
     <TouchableOpacity
-      className="p-3 rounded-xl w-44 h-44 bg-white shadow-[10] mr-3 my-3"
+      className="p-3 rounded-xl w-64 h-44 bg-white shadow-[10] mr-3 my-3"
       style={styles.card}
       onPress={() => router.push(`/${product.id}`)}
     >
       <Image
-        className="w-full aspect-[5/3] rounded-sm"
+        className="w-full aspect-[5/2] rounded-md"
         resizeMethod="cover"
         source={{ uri: product.productPicture }}
       />
       <View className="mt-1 flex-row justify-between w-full flex-1 items-center">
-        <View className="w-[70%]">
-          <Text className="font-ibold text-[12px]">{product.name}</Text>
-          <Text className="font-iregular text-gray-500 text-[10px]">
+        <View className="flex-1 mr-4">
+          <Text className="font-isemibold text-[15px]" numberOfLines={1}>
+            {product.name}
+          </Text>
+          <Text className="font-iregular text-gray-500 text-[11px]">
             {product.productOwner}
           </Text>
         </View>
-        <View className="w-[30%]">
-          <Text className="font-ibold text-[10px]">
-            {formatAmountInRupiah(product.price)}
+        <View>
+          <Text className="font-ibold text-purple-700 text-base">
+            Rp. {formatNumberToK(product.price)}
           </Text>
         </View>
       </View>

@@ -15,26 +15,21 @@ const Marketplace = () => {
       <View className="px-[6vw] pt-[3vh]">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       </View>
-      <Text className="text-black font-bold text-[18px] mb-[2vh] mx-[6vw]">
-        For You
-      </Text>
+      <Text className="text-black font-bold text-[18px] mx-[6vw]">For You</Text>
       <ScrollView horizontal={true}>
         <View className="w-6" />
         {products.map((product, index) => (
           <ProductCard key={index} product={product} />
         ))}
       </ScrollView>
-      <TouchableOpacity
-        onPress={() => router.push("/10")}
-        className="mt-[2vh] rounded-[10px] mb-[2vh] w-full px-[6vw]"
-      >
+      <View className="mt-[2vh] rounded-[10px] mb-[2vh] w-full px-6">
         <Image
           source={require("../../assets/images/discover_ungu.png")}
           className="h-[20vh] w-full rounded-[10px]"
           resizeMode="cover"
         />
-      </TouchableOpacity>
-      <Text className="text-black font-bold text-[18px] mb-[2vh] mx-[6vw]">
+      </View>
+      <Text className="text-black font-bold text-[18px] mx-[6vw]">
         Handicrafts
       </Text>
 
