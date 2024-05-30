@@ -1,11 +1,8 @@
 import { FIRESTORE_DB } from "../config/firebaseConfig";
 import {
   Timestamp,
-  addDoc,
   collection,
-  deleteDoc,
   doc,
-  getDoc,
   onSnapshot,
   writeBatch,
 } from "firebase/firestore";

@@ -1,7 +1,6 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import { formatDate } from "../utils/formatDate";
-import { formatNumberToK } from "../utils/currency";
 
 const OrderCard = ({ order }) => {
   return (

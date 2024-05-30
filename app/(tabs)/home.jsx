@@ -1,62 +1,24 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
 import images from "../../constants/images";
 import ProductCard from "../../components/home/ProductCard";
 import StoryCard from "../../components/home/StoryCard";
 import { FIREBASE_AUTH } from "../../config/firebaseConfig";
 import { useRouter } from "expo-router";
-
-const trendingData = [
-  {
-    photoUrl: "https://picsum.photos/200",
-    title: "Product 1",
-    price: 200,
-    owner: "John Doe",
-  },
-  {
-    photoUrl: "https://picsum.photos/200",
-    title: "Product 2",
-    price: 300,
-    owner: "Jane Doe",
-  },
-  {
-    photoUrl: "https://picsum.photos/200",
-    title: "Product 3",
-    price: 400,
-    owner: "John Doe",
-  },
-  {
-    photoUrl: "https://picsum.photos/200",
-    title: "Product 4",
-    price: 500,
-    owner: "Jane Doe",
-  },
-  {
-    photoUrl: "https://picsum.photos/200",
-    title: "Product 5",
-    price: 600,
-    owner: "John Doe",
-  },
-  {
-    photoUrl: "https://picsum.photos/200",
-    title: "Product 6",
-    price: 700,
-    owner: "Jane Doe",
-  },
-];
+import { GetProducts } from "../../services/ProductService";
 
 const storyData = [
   {
-    title: "My Life as a Disabled Pastry Baker",
+    title: "Hidupku, Pembuat Kue Penyandang Disabilitas",
     description:
-      "How I overcame my disability to become a pastry chef and open my own bakery, Sweet Dreams. I share my story and my favorite recipes.",
-    photoUrl: "https://picsum.photos/200",
+      "Bagaimana disabilitas saya tidak menghalangi saya untuk menjadi koki pastry dan membuka toko roti saya sendiri, Sweet Dreams. Saya berbagi cerita dan resep favorit saya.",
+    photoUrl: "https://i.pinimg.com/564x/7d/8b/44/7d8b44039fd3603cc370fec31087ee65.jpg",
   },
   {
-    title: "How I Became a Successful Entrepreneur",
+    title: "Pengusaha Sukses pengidap Down Syndrome",
     description:
-      "I share my journey from being a broke college student to becoming a successful entrepreneur. I share my tips and tricks for starting your own business.",
-    photoUrl: "https://picsum.photos/200",
+      "Saya ingin cerita tentang perjalanan saya dari mahasiswa miskin hingga menjadi pengusaha sukses. Saya berbagi tips dan trik untuk memulai bisnis Anda sendiri.",
+    photoUrl: "https://i.pinimg.com/564x/ae/db/d8/aedbd86918a28f1a0484c821b80c8623.jpg",
   },
 ];
 
@@ -71,17 +33,23 @@ const Home = () => {
     }
   }, []);
 
+  const { products, loading } = GetProducts();
+
   return (
     <ScrollView className="h-full bg-white">
       <View className="w-full">
         <View className="my-3">
           <Text className="font-ibold text-xl pl-6">Trending</Text>
-          <ScrollView horizontal={true}>
-            <View className="w-6" />
-            {trendingData.map((product, index) => (
-              <ProductCard key={index} product={product} />
-            ))}
-          </ScrollView>
+          {loading ? (
+            <ActivityIndicator size="large" color="#741CCB" />
+          ) : (
+            <ScrollView horizontal={true}>
+              <View className="w-6" />
+              {products.map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))}
+            </ScrollView>
+          )}
         </View>
       </View>
       <View className="w-full px-6">
