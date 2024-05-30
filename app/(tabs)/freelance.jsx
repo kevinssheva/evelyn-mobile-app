@@ -2,8 +2,19 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import SearchBar from "../../components/search";
-import ProductCard from "../../components/home/ProductCard";
+import JobDisplay from "../../components/JobDisplay";
 import { GetProducts } from "../../services/ProductService";
+
+const jobData = [
+  {
+    id: 1,
+    name: "Frontend Developer",
+    company: "Google",
+    disabilityType: ["Hearing Impairment", "Visual Impairment"],
+    companyPicture: "https://picsum.photos/200",
+    type: "Full-time",
+  },
+];
 
 const Freelance = () => {
   const router = useRouter();
@@ -20,8 +31,8 @@ const Freelance = () => {
       </Text>
       <ScrollView horizontal={true}>
         <View className="w-6" />
-        {products.map((product, index) => (
-          <ProductCard key={index} product={product} />
+        {jobData.map((job, index) => (
+          <JobDisplay key={index} job={job} />
         ))}
       </ScrollView>
       <TouchableOpacity
@@ -41,11 +52,9 @@ const Freelance = () => {
       <ScrollView horizontal={true}>
         <View className="w-6" />
         {/* filter only products with "type": "Handicraft"*/}
-        {products
-          .filter((product) => product.type === "Handicraft")
-          .map((product, index) => (
-            <ProductCard key={index} product={product} />
-          ))}
+        {jobData.map((job, index) => (
+          <JobDisplay key={index} job={job} />
+        ))}
       </ScrollView>
     </ScrollView>
   );
