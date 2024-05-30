@@ -26,7 +26,7 @@ const JobDisplay = ({ job }) => {
               {job.name}
             </Text>
             <Text className="font-iregular text-gray-500 text-[11px]">
-              {job.company}
+              {job.companyName}
             </Text>
           </View>
           <Text className="font-ibold">{job.type}</Text>
