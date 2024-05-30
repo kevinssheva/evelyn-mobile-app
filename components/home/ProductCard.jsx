@@ -1,7 +1,9 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
+import { useRouter } from "expo-router";
 
 const ProductCard = ({ product }) => {
+  const router = useRouter();
   const formatAmountInRupiah = (amount) => {
     const parsedAmount = parseInt(amount, 10);
 
@@ -17,10 +19,13 @@ const ProductCard = ({ product }) => {
     return formattedAmount;
   };
 
+  console.log(product)
+
   return (
-    <View
+    <TouchableOpacity
       className="p-3 rounded-xl w-44 h-44 bg-white shadow-[10] mr-3 my-3"
       style={styles.card}
+      onPress={() => router.push(`/${product.id}`)}
     >
       <Image
         className="w-full aspect-[5/3] rounded-sm"
@@ -40,7 +45,7 @@ const ProductCard = ({ product }) => {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
