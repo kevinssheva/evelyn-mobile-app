@@ -28,11 +28,17 @@ const ProductCard = ({ product }) => {
         source={{ uri: product.productPicture }}
       />
       <View className="mt-1 flex-row justify-between w-full flex-1 items-center">
-        <View>
-          <Text className="font-ibold text-[15px]">{product.name}</Text>
-          <Text className="font-iregular text-gray-500">{product.productOwner}</Text>
+        <View className="w-[70%]">
+          <Text className="font-ibold text-[12px]">{product.name}</Text>
+          <Text className="font-iregular text-gray-500 text-[10px]">
+            {product.productOwner}
+          </Text>
         </View>
-        <Text className="font-ibold">{formatAmountInRupiah(product.price)}</Text>
+        <View className="w-[30%]">
+          <Text className="font-ibold text-[10px]">
+            {formatAmountInRupiah(product.price)}
+          </Text>
+        </View>
       </View>
     </View>
   );
