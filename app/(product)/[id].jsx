@@ -10,13 +10,21 @@ import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import Modal from "react-native-modal";
+import { GetProductById } from "../../services/ProductService";
+import { formatNumberToK } from "../../utils/currency";
 
 const ProductDetails = () => {
   const { id } = useLocalSearchParams();
+  const { product, loading } = GetProductById(id);
   const router = useRouter();
   const star = Array(5).fill(require("../../assets/images/star.png"));
   const [isModalVisible, setModalVisible] = useState(false);
   const [count, setCount] = useState(1);
+
+  // kalo loading, return view kosong aja
+  if (loading) {
+    return <View></View>;
+  }
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -46,13 +54,13 @@ const ProductDetails = () => {
         <View>
           <View className="bg-white rounded-t-[10px] px-[6vw] py-[2vh] flex-row">
             <Image
-              source={require("../../assets/images/discover_ungu.png")}
+              source={{ uri: product.productPicture }}
               className="h-[17vh] w-[35vw]"
               resizeMode="cover"
             />
             <View className="flex-col ml-5 justify-between">
               <View>
-                <Text className="font-bold text-[20px]">Cookies</Text>
+                <Text className="font-bold text-[20px]">{product.name}</Text>
                 <Text className="font-regular text-[14px]">Stock: 30</Text>
               </View>
               <View className="flex-row gap-3 items-center">
@@ -89,7 +97,7 @@ const ProductDetails = () => {
 
       <ScrollView>
         <Image
-          source={require("../../assets/images/discover_ungu.png")}
+          source={{ uri: product.productPicture }}
           className="h-[30vh] w-full"
           resizeMode="cover"
         />
@@ -99,13 +107,17 @@ const ProductDetails = () => {
         <View className="px-[6vw] py-[2vh]">
           <View className="flex-row w-full justify-between items-center">
             <View className="flex-col h-full">
-              <Text className="font-bold text-[24px] text-black">Cookies</Text>
+              <Text className="font-bold text-[24px] text-black">
+                {product.name}
+              </Text>
               <Text className="font-light text-[16px] text-black">
                 1795 reviews
               </Text>
             </View>
             <View className="flex-row items-end">
-              <Text className="font-bold text-[24px] text-black">$5</Text>
+              <Text className="font-bold text-[24px] text-black">
+                {formatNumberToK(product.price)}
+              </Text>
               <Text className="font-bold text-[14px] text-[#9F948B]">/pc</Text>
             </View>
           </View>
@@ -130,12 +142,7 @@ const ProductDetails = () => {
               Description
             </Text>
             <Text className="font-regular text-[14px] text-black">
-              Heavenly Bites Cookies are unmatched delights in every bite.
-              Crafted with love and care, each of our recipes is perfected to
-              provide a palate-pampering experience. Every soft chocolate chip
-              melts in your mouth, blending perfect sweetness with the gentle
-              sensation of the cookie. We use only the finest quality
-              ingredients... see more
+              {product.description}
             </Text>
           </View>
 
@@ -146,12 +153,14 @@ const ProductDetails = () => {
             <View className="flex-col px-[4vw] py-[2vh] w-full bg-[#DBFFDA] rounded-[10px]">
               <View className="flex-row">
                 <Image
-                  source={require("../../assets/images/discover_ungu.png")}
+                  source={{ uri: product.ownerPicture }}
                   className="h-[10vh] w-[10vh] rounded-[100px]"
                   resizeMode="cover"
                 />
                 <View className="flex-col w-full ml-5 justify-center">
-                  <Text className="font-bold text-[20px]">Anna Marshall</Text>
+                  <Text className="font-bold text-[20px]">
+                    {product.productOwner}
+                  </Text>
                   <Text className="font-regular text-[12px]">
                     Bandung, Indonesia
                   </Text>
@@ -161,13 +170,7 @@ const ProductDetails = () => {
                 </View>
               </View>
               <Text className="font-regular text-[12px] text-black mt-4">
-                Anna Marshall is a resilient and determined woman who moved to
-                Indonesia from India seven years ago. Born in Massachusets, Anna
-                was diagnosed with a mobility impairment due to a spinal injury
-                from a car accident in her early twenties. Despite the
-                challenges, she pursued her education in culinary arts and had
-                always been passionate about exploring different cultures
-                cuisine.
+                {product.productOwnerDescription}
               </Text>
             </View>
           </View>
