@@ -5,22 +5,29 @@ import {
   ScrollView,
   TouchableOpacity,
   Button,
+  ActivityIndicator,
 } from "react-native";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import Modal from "react-native-modal";
+import { getJobById } from "../../../services/JobService";
 
 const JobDetails = () => {
   const { id } = useLocalSearchParams();
+  const { job, loading } = getJobById(id);
   const router = useRouter();
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#741CCB" />;
+  }
 
   return (
     <View className="flex-1">
       <ScrollView>
         <Image
-          source={require("../../../assets/images/discover_ungu.png")}
+          source={{ uri: job.companyPicture }}
           className="h-[30vh] w-full"
           resizeMode="cover"
         />
@@ -29,7 +36,7 @@ const JobDetails = () => {
         </View>
         <View className="px-[6vw] py-[2vh]">
           <View className="flex-col">
-            <Text className="font-bold text-[24px]">Art Comms</Text>
+            <Text className="font-bold text-[24px]">{job.name}</Text>
 
             <View className="flex-row items-center">
               <TabBarIcon name={"briefcase"} color={"black"} size={10} />
@@ -61,12 +68,7 @@ const JobDetails = () => {
               About the Job
             </Text>
             <Text className="font-regular text-[14px] text-black">
-              Heavenly Bites Cookies are unmatched delights in every bite.
-              Crafted with love and care, each of our recipes is perfected to
-              provide a palate-pampering experience. Every soft chocolate chip
-              melts in your mouth, blending perfect sweetness with the gentle
-              sensation of the cookie. We use only the finest quality
-              ingredients... see more
+              {job.description}
             </Text>
           </View>
 
@@ -77,25 +79,21 @@ const JobDetails = () => {
             <View className="flex-col px-[4vw] py-[2vh] w-full bg-[#EEEEEE] rounded-[10px]">
               <View className="flex-row">
                 <Image
-                  source={require("../../../assets/images/discover_ungu.png")}
+                  source={{ uri: job.companyPicture }}
                   className="h-[8vh] w-[8vh] rounded-[100px]"
                   resizeMode="cover"
                 />
                 <View className="flex-col w-full ml-5 justify-center">
-                  <Text className="font-bold text-[18px]">Oglivy</Text>
+                  <Text className="font-bold text-[18px]">
+                    {job.companyName}
+                  </Text>
                   <Text className="font-light text-[12px] text-[#969595]">
                     1,559,039 followers
                   </Text>
                 </View>
               </View>
               <Text className="font-regular text-[12px] text-black mt-4">
-                Anna Marshall is a resilient and determined woman who moved to
-                Indonesia from India seven years ago. Born in Massachusets, Anna
-                was diagnosed with a mobility impairment due to a spinal injury
-                from a car accident in her early twenties. Despite the
-                challenges, she pursued her education in culinary arts and had
-                always been passionate about exploring different cultures
-                cuisine.
+                {job.companyDescription}
               </Text>
             </View>
           </View>

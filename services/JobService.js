@@ -38,3 +38,24 @@ export function getJobs() {
 
   return { jobs, loading, error };
 }
+
+export function getJobById(jobId) {
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(doc(FIRESTORE_DB, "jobs", jobId), (doc) => {
+      if (doc.exists()) {
+        setJob({ id: doc.id, ...doc.data() });
+      } else {
+        setError("Job not found");
+      }
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, [jobId]);
+
+  return { job, loading, error };
+}
