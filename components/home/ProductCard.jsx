@@ -2,24 +2,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
 import { formatNumberToK } from "../../utils/currency";
-import { Ionicons } from "@expo/vector-icons";
 
 const ProductCard = ({ product }) => {
   const router = useRouter();
-  const formatAmountInRupiah = (amount) => {
-    const parsedAmount = parseInt(amount, 10);
-
-    if (isNaN(parsedAmount)) {
-      return "Invalid Amount";
-    }
-
-    const formattedAmount = new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(parsedAmount);
-
-    return formattedAmount;
-  };
 
   return (
     <TouchableOpacity

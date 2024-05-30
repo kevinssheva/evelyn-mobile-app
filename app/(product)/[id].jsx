@@ -24,21 +24,21 @@ const testimoniData = [
     review: "Amazing. The seller was very friendly. The cookies were amazing.",
     rating: 5,
     reviewCount: 234,
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://i.pinimg.com/736x/ef/71/48/ef714802fbb21f2fddc5559ccf382f02.jpg",
   },
   {
     name: "Jane Doe",
     review: "The cookies were amazing. The seller was very friendly.",
     rating: 5,
     reviewCount: 243,
-    profilePicture: "https://picsum.photos/300",
+    profilePicture: "https://i.pinimg.com/736x/27/78/b5/2778b54241fb4dc459ed95952e2e02f9.jpg",
   },
   {
     name: "John Doe",
     review: "It is very good. I wonder if I can get more of this.",
     rating: 5,
     reviewCount: 442,
-    profilePicture: "https://picsum.photos/400",
+    profilePicture: "https://i.pinimg.com/564x/4f/78/ed/4f78ed9121902798a9dcece2a8a663a5.jpg",
   },
 ];
 
@@ -46,8 +46,6 @@ const ProductDetails = () => {
   const { id } = useLocalSearchParams();
   const { product, loading } = GetProductById(id);
   const auth = FIREBASE_AUTH;
-  const router = useRouter();
-  const star = Array(5).fill(require("../../assets/images/star.png"));
   const [isModalVisible, setModalVisible] = useState(false);
   const [count, setCount] = useState(1);
 

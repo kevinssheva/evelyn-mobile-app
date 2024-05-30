@@ -5,20 +5,9 @@ import { Ionicons } from "@expo/vector-icons";
 
 const JobDisplay = ({ job }) => {
   const router = useRouter();
-  const formatAmountInRupiah = (amount) => {
-    const parsedAmount = parseInt(amount, 10);
 
-    if (isNaN(parsedAmount)) {
-      return "Invalid Amount";
-    }
-
-    const formattedAmount = new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(parsedAmount);
-
-    return formattedAmount;
-  };
+  const disabilityArray = job.disabilityType.split(", ");
+  console.log(disabilityArray)
 
   return (
     <TouchableOpacity
@@ -44,7 +33,7 @@ const JobDisplay = ({ job }) => {
           <Text className="font-ibold">{job.type}</Text>
         </View>
         <View className="flex flex-row items-start mt-auto flex-wrap gap-1 w-full">
-          {job.disabilityType.slice(0, 2).map((disability, index) => (
+          {disabilityArray.slice(0, 2).map((disability, index) => (
             <Text
               key={index}
               className="font-iregular text-[11px] bg-purple-200 text-purple-800 px-2 py-1 rounded-full"
