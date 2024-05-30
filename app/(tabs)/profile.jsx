@@ -14,6 +14,8 @@ import { Octicons } from "@expo/vector-icons";
 
 import { useRouter } from "expo-router";
 
+import Toast from 'react-native-toast-message';
+
 const data = {
   name: "Adi Sucipto",
   email: "adi.sucipto@gmail.com",
@@ -28,9 +30,17 @@ const Profile = () => {
   const handleSignout = async () => {
     try {
       await signOut(auth);
-      alert("Sign out successful");
+      Toast.show({
+        type: 'success',
+        text1: 'Sign Out Success',
+        text2: 'See you later!',
+      });
     } catch (error) {
-      console.log(error);
+      Toast.show({
+        type: 'error',
+        text1: 'Sign Out Failed',
+        text2: 'Please try again later',
+      });
     }
   };
 

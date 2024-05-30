@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 import Checkbox from "../../components/Checkbox";
-import { HelloWave } from "../../components/HelloWave";
+import Toast from 'react-native-toast-message';
 import { Link } from "expo-router";
 import { FIREBASE_AUTH } from "../../config/firebaseConfig";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -35,11 +35,17 @@ const SignUp = () => {
         displayName: userInput.name,
       });
 
-      console.log(user);
+      Toast.show({
+        type: 'success',
+        text1: 'Sign Up Success',
+        text2: `Welcome, ${user.displayName}`,
+      });
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      Toast.show({
+        type: 'error',
+        text1: 'Sign Up Failed',
+        text2: 'Please check your email and password',
+      });
     }
   };
 

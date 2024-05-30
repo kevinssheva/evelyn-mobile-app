@@ -7,6 +7,7 @@ import { HelloWave } from "../../components/HelloWave";
 import { Link } from "expo-router";
 import { FIREBASE_AUTH } from "../../config/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import Toast from 'react-native-toast-message';
 
 const SignIn = () => {
   const [userInput, setUserInput] = useState({
@@ -29,8 +30,18 @@ const SignIn = () => {
       );
       
       const user = userCredential.user;
+      Toast.show({
+        type: 'success',
+        text1: 'Sign In Success',
+        text2: `Welcome back, ${user.displayName}`,
+      });
     } catch (error) {
       console.log(error);
+      Toast.show({
+        type: 'error',
+        text1: 'Sign In Failed',
+        text2: 'Please check your email and password',
+      });
     }
   };
   return (
