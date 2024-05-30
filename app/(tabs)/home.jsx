@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import images from "../../constants/images";
 import ProductCard from "../../components/home/ProductCard";
 import StoryCard from "../../components/home/StoryCard";
-import { FIREBASE_AUTH } from "../../config/FirebaseConfig";
+import { FIREBASE_AUTH } from "../../config/firebaseConfig";
 import { useRouter } from "expo-router";
 
 const trendingData = [
@@ -69,8 +69,6 @@ const Home = () => {
     if (!auth.currentUser) {
       router.push("/sign-in");
     }
-
-    console.log("auth.currentUser", auth.currentUser);
   }, []);
 
   return (

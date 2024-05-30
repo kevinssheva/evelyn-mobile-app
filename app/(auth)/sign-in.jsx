@@ -5,7 +5,7 @@ import FormField from "../../components/FormField";
 import Checkbox from "../../components/Checkbox";
 import { HelloWave } from "../../components/HelloWave";
 import { Link } from "expo-router";
-import { FIREBASE_AUTH } from "../../config/FirebaseConfig";
+import { FIREBASE_AUTH } from "../../config/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignIn = () => {
@@ -29,7 +29,6 @@ const SignIn = () => {
       );
       
       const user = userCredential.user;
-      console.log(user);
     } catch (error) {
       console.log(error);
     }
