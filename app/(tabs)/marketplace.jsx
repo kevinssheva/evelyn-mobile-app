@@ -3,37 +3,12 @@ import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import SearchBar from "../../components/search";
 import ProductCard from "../../components/home/ProductCard";
+import { GetProducts } from "../../services/ProductService";
 
 const Marketplace = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-
-  const a = [1, 2, 3, 4, 5];
-
-  const products = [
-    {
-      productId: 1,
-      title: "Product 1",
-      owner: "Seller A",
-      price: 10,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 2,
-      title: "Product 2",
-      owner: "Seller B",
-      price: 20,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 3,
-      title: "Product 3",
-      owner: "Seller C",
-      price: 30,
-      photoUrl: "https://picsum.photos/200",
-    },
-    // Add more dummy product data as needed
-  ];
+  const { products } = GetProducts();
 
   return (
     <ScrollView>
@@ -65,9 +40,12 @@ const Marketplace = () => {
 
       <ScrollView horizontal={true}>
         <View className="w-6" />
-        {products.map((product, index) => (
-          <ProductCard key={index} product={product} />
-        ))}
+        {/* filter only products with "type": "Handicraft"*/}
+        {products
+          .filter((product) => product.type === "Handicraft")
+          .map((product, index) => (
+            <ProductCard key={index} product={product} />
+          ))}
       </ScrollView>
     </ScrollView>
   );
