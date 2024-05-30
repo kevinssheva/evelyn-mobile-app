@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
         </View>
         <View>
           <Text className="font-ibold text-purple-700 text-base">
-            Rp. {formatNumberToK(product.price)}
+            Rp {formatNumberToK(product.price)}
           </Text>
         </View>
       </View>

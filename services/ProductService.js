@@ -1,4 +1,4 @@
-import { FIREBASE_AUTH, FIRESTORE_DB } from "../config/firebaseConfig";
+import { FIRESTORE_DB } from "../config/firebaseConfig";
 import {
   collection,
   doc,
@@ -57,7 +57,7 @@ export function GetProductById(id) {
 
         // Cleanup subscription on unmount
         return () => unsubscribe();
-    }, []);
+    }, [id]);
 
     return { product, loading, error };
 }

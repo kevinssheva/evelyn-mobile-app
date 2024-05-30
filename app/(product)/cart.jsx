@@ -1,125 +1,89 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
+import {
+  DeleteProductQuantityById,
+  GetProductQuantitiesByUserId,
+} from "../../services/CartService";
+import { FIREBASE_AUTH } from "../../config/firebaseConfig";
+import { formatDate } from "../../utils/formatDate";
+import Toast from "react-native-toast-message";
+import { formatNumberToK } from "../../utils/currency";
 
 const Cart = () => {
+  const auth = FIREBASE_AUTH;
+  const { cart, loading } = GetProductQuantitiesByUserId(auth.currentUser.uid);
   const router = useRouter();
-  const products = [
-    {
-      productId: 1,
-      title: "Product 1",
-      owner: "Seller A",
-      sum: 4,
-      price: 10,
-      totalPrice: 40,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 2,
-      title: "Product 2",
-      owner: "Seller B",
-      sum: 3,
-      price: 20,
-      totalPrice: 60,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 3,
-      title: "Product 3",
-      owner: "Seller C",
-      sum: 3,
-      price: 30,
-      totalPrice: 90,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 3,
-      title: "Product 3",
-      owner: "Seller C",
-      sum: 3,
-      price: 30,
-      totalPrice: 90,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 3,
-      title: "Product 3",
-      owner: "Seller C",
-      sum: 3,
-      price: 30,
-      totalPrice: 90,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 3,
-      title: "Product 3",
-      owner: "Seller C",
-      sum: 3,
-      price: 30,
-      totalPrice: 90,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 3,
-      title: "Product 3",
-      owner: "Seller C",
-      sum: 3,
-      price: 30,
-      totalPrice: 90,
-      photoUrl: "https://picsum.photos/200",
-    },
-    {
-      productId: 3,
-      title: "Product 3",
-      owner: "Seller C",
-      sum: 3,
-      price: 30,
-      totalPrice: 90,
-      photoUrl: "https://picsum.photos/200",
-    },
-    // Add more dummy product data as needed
-  ];
+
+  if (loading) return <ActivityIndicator size="large" color="#741CCB" />;
+
+  console.log("cartz", cart);
+
+  const handleDeleteCartItem = async (productQuantityId) => {
+    try {
+      await DeleteProductQuantityById(productQuantityId);
+      Toast.show({
+        type: "success",
+        text1: "Product removed from cart",
+        text2: "Product has been successfully removed from your cart",
+      });
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Failed to remove product",
+        text2: error,
+      });
+    }
+  };
 
   return (
     <View className="flex-1">
       <ScrollView>
         <View className="px-[6vw] py-[3vh]">
           <Text className="font-bold text-[20px]">Your Cart</Text>
-          {products.map((product, index) => (
+          {cart.map((productQuantity, index) => (
             <View key={index} className="pt-[2vh] flex-col gap-4">
               <View className="flex-row justify-between">
                 <View className="flex-row">
                   <Image
                     className="w-[35vw] aspect-[3/2] rounded-sm"
                     resizeMethod="cover"
-                    source={{ uri: product.photoUrl }}
+                    source={{ uri: productQuantity.productId.productPicture }}
                   />
                   <View className="flex-col justify-between ml-4">
                     <View className="flex-col">
                       <View className="flex-row items-end">
                         <Text className="font-bold text-[14px]">
-                          {product.title}{" "}
+                          {productQuantity.productId.name}{" "}
                         </Text>
                         <Text className="font-regular text-[12px] text-[#969595]">
-                          x{product.sum}
+                          x{productQuantity.quantity}
                         </Text>
                       </View>
                       <Text className="font-regular text-[12px] mt-1">
-                        {product.owner}
+                        {productQuantity.productId.productOwner}
                       </Text>
                     </View>
                     <Text className="font-regular text-[12px] text-[#969595]">
-                      14-01-2023
+                      {formatDate(productQuantity.timestamp.toDate())}
                     </Text>
                   </View>
                 </View>
 
                 <View className="flex-col justify-between items-end">
                   <Text className="font-bold text-[12px]">
-                    ${product.totalPrice}
+                    Rp {formatNumberToK(productQuantity.totalPrice)}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => router.push("/10")}
+                    onPress={() => handleDeleteCartItem(productQuantity.id)}
                     className="bg-[#FF0000] py-1.5 px-6 rounded-[5px]"
                   >
                     <Text className="font-semibold text-white text-[10px]">
