@@ -16,6 +16,7 @@ import { FIREBASE_AUTH } from "../../config/firebaseConfig";
 import { formatDate } from "../../utils/formatDate";
 import Toast from "react-native-toast-message";
 import { formatNumberToK } from "../../utils/currency";
+import { addOrderHistory } from "../../services/OrderHistory";
 
 const Cart = () => {
   const auth = FIREBASE_AUTH;
@@ -23,8 +24,6 @@ const Cart = () => {
   const router = useRouter();
 
   if (loading) return <ActivityIndicator size="large" color="#741CCB" />;
-
-  console.log("cartz", cart);
 
   const handleDeleteCartItem = async (productQuantityId) => {
     try {
@@ -39,6 +38,26 @@ const Cart = () => {
       Toast.show({
         type: "error",
         text1: "Failed to remove product",
+        text2: error,
+      });
+    }
+  };
+
+  const handleMakeOrder = async () => {
+    try {
+      await addOrderHistory(cart);
+      Toast.show({
+        type: "success",
+        text1: "Order Success",
+        text2: "Your orders has been successfully placed",
+      });
+
+      router.push("/order-history");
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Order Failed",
         text2: error,
       });
     }
@@ -111,7 +130,7 @@ const Cart = () => {
       </ScrollView>
 
       <TouchableOpacity
-        onPress={() => router.push("/order-history")}
+        onPress={() => handleMakeOrder()}
         className="fixed bottom-0 bg-green-700 w-full h-[7vh] items-center justify-center"
       >
         <Text className="font-ibold text-[18px] text-white">Make Order</Text>
