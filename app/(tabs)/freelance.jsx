@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import SearchBar from "../../components/search";
 import JobDisplay from "../../components/JobDisplay";
-import { GetProducts } from "../../services/ProductService";
+import { getJobs } from "../../services/JobService";
 
 const jobData = [
   {
@@ -18,8 +18,12 @@ const jobData = [
 
 const Freelance = () => {
   const router = useRouter();
+  const { jobs, loading } = getJobs();
   const [searchQuery, setSearchQuery] = useState("");
-  const { products } = GetProducts();
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#741CCB" />;
+  }
 
   return (
     <ScrollView>
@@ -31,7 +35,7 @@ const Freelance = () => {
       </Text>
       <ScrollView horizontal={true}>
         <View className="w-6" />
-        {jobData.map((job, index) => (
+        {jobs.map((job, index) => (
           <JobDisplay key={index} job={job} />
         ))}
       </ScrollView>
@@ -51,8 +55,7 @@ const Freelance = () => {
 
       <ScrollView horizontal={true}>
         <View className="w-6" />
-        {/* filter only products with "type": "Handicraft"*/}
-        {jobData.map((job, index) => (
+        {jobs.map((job, index) => (
           <JobDisplay key={index} job={job} />
         ))}
       </ScrollView>
