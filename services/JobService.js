@@ -3,7 +3,6 @@ import {
   Timestamp,
   addDoc,
   collection,
-  deleteDoc,
   doc,
   getDoc,
   onSnapshot,
@@ -58,4 +57,71 @@ export function getJobById(jobId) {
   }, [jobId]);
 
   return { job, loading, error };
+}
+
+export function applyJob(userId, jobId) {
+  return addDoc(collection(FIRESTORE_DB, "appliedJobs"), {
+    userId: doc(FIRESTORE_DB, "users", userId),
+    jobId: doc(FIRESTORE_DB, "jobs", jobId),
+    timestamp: Timestamp.now(),
+  });
+}
+
+export function getAppliedJobsByUserId(userId) {
+  const [appliedJobs, setAppliedJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(FIRESTORE_DB, "appliedJobs"),
+      async (snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        const appliedJobs = data.map(async (appliedJob) => {
+          const docData = appliedJob;
+
+          const jobRef = docData["jobId"];
+          const jobSnap = await getDoc(jobRef);
+          const jobData = {
+            id: jobSnap.id,
+            ...jobSnap.data(),
+          };
+
+          const userRef = docData["userId"];
+          const userSnap = await getDoc(userRef);
+          const userData = {
+            id: userSnap.id,
+            ...userSnap.data(),
+          };
+
+          return {
+            ...docData,
+            jobId: jobData,
+            userId: userData,
+          };
+        });
+
+        const appliedJobsData = await Promise.all(appliedJobs);
+
+        const filteredData = appliedJobsData.filter(
+          (appliedJob) => appliedJob.userId.id === userId
+        );
+
+        setAppliedJobs(filteredData);
+        setLoading(false);
+      },
+      (error) => {
+        setError(error);
+        setLoading(false);
+      }
+    );
+
+    return unsubscribe;
+  }, []);
+
+  return { appliedJobs, loading, error };
 }
