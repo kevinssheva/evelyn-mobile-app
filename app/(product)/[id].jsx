@@ -16,6 +16,7 @@ import { addToCart } from "../../services/CartService";
 import { FIREBASE_AUTH } from "../../config/firebaseConfig";
 import Toast from "react-native-toast-message";
 import { Octicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 const testimoniData = [
   {
@@ -102,37 +103,35 @@ const ProductDetails = () => {
               className="h-[17vh] w-[35vw]"
               resizeMode="cover"
             />
-            <View className="flex-col ml-5 justify-between">
+            <View className="flex-col ml-5 justify-between flex-1">
               <View>
-                <Text className="font-bold text-[20px]">{product.name}</Text>
-                <Text className="font-regular text-[14px]">Stock: 30</Text>
+                <Text className="font-ibold text-[20px]" numberOfLines={2}>
+                  {product.name}
+                </Text>
+                <Text className="font-iregular text-[14px]">Stock: 30</Text>
               </View>
-              <View className="flex-row gap-3 items-center">
+              <View className="flex-row gap-3 justify-between items-center">
                 <TouchableOpacity
                   className="h-[7vw] w-[7vw] border-[#072389] border-[1px] rounded-[3px] flex-row items-center justify-center"
                   onPress={handleDecrement}
                 >
-                  <Text className="flex font-bold text-[18px] text-[#072389]">
-                    -
-                  </Text>
+                  <Feather name="minus" size={24} color="black" />
                 </TouchableOpacity>
-                <Text className="font-bold text-[16px]">{count}</Text>
+                <Text className="font-ibold text-[16px]">{count}</Text>
                 <TouchableOpacity
                   className="h-[7vw] w-[7vw] border-[#072389] border-[1px] rounded-[3px] flex-row items-center justify-center"
                   onPress={handleIncrement}
                 >
-                  <Text className="flex font-bold text-[18px] text-[#072389]">
-                    +
-                  </Text>
+                  <Feather name="plus" size={24} color="black" />
                 </TouchableOpacity>
               </View>
             </View>
           </View>
           <TouchableOpacity
             onPress={handleAddToCart}
-            className="bg-blue-900 w-full h-[7vh] items-center justify-center"
+            className="bg-purple-900 w-full rounded-b-[10px] h-[7vh] items-center justify-center"
           >
-            <Text className="font-bold text-[18px] text-white">
+            <Text className="font-ibold text-[18px] text-white">
               Add to Cart
             </Text>
           </TouchableOpacity>
