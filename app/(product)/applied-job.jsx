@@ -1,6 +1,8 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import React from "react";
 import JobCard from "@/components/JobCard";
+import { FIREBASE_AUTH } from "../../config/firebaseConfig";
+import { getAppliedJobsByUserId } from "../../services/JobService";
 
 const data = [
   {
@@ -62,12 +64,17 @@ const data = [
 ];
 
 const AppliedJob = () => {
+  const auth = FIREBASE_AUTH;
+  const { appliedJobs, loading } = getAppliedJobsByUserId(auth.currentUser.uid);
+
   return (
     <ScrollView>
       <View className="px-3">
-        {data.map((item, index) => (
-          <JobCard job={item} />
-        ))}
+        {loading ? (
+          <ActivityIndicator size="large" color="#741CCB" />
+        ) : (
+          appliedJobs.map((item, index) => <JobCard key={index} job={item} />)
+        )}
       </View>
     </ScrollView>
   );
