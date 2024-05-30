@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import SearchBar from "../../components/search";
@@ -8,14 +15,21 @@ import { GetProducts } from "../../services/ProductService";
 const Marketplace = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const { products } = GetProducts();
+  const { products, loading } = GetProducts();
+
+  if (loading)
+    return (
+      <View className="h-full items-center justify-center">
+        <ActivityIndicator size="large" color="#741CCB" />
+      </View>
+    );
 
   return (
     <ScrollView>
       <View className="px-[6vw] pt-[3vh]">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       </View>
-      <Text className="text-black font-bold text-[18px] mx-[6vw]">For You</Text>
+      <Text className="text-black font-ibold text-[18px] mx-[6vw]">For You</Text>
       <ScrollView horizontal={true}>
         <View className="w-6" />
         {products.map((product, index) => (

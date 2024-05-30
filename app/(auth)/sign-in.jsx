@@ -7,13 +7,15 @@ import { HelloWave } from "../../components/HelloWave";
 import { Link } from "expo-router";
 import { FIREBASE_AUTH } from "../../config/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import Toast from 'react-native-toast-message';
+import Toast from "react-native-toast-message";
 
 const SignIn = () => {
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChangeText = (key, value) => {
     setUserInput({ ...userInput, [key]: value });
@@ -22,26 +24,29 @@ const SignIn = () => {
   const auth = FIREBASE_AUTH;
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         userInput.email,
         userInput.password
       );
-      
+
       const user = userCredential.user;
       Toast.show({
-        type: 'success',
-        text1: 'Sign In Success',
+        type: "success",
+        text1: "Sign In Success",
         text2: `Welcome back, ${user.displayName}`,
       });
     } catch (error) {
       console.log(error);
       Toast.show({
-        type: 'error',
-        text1: 'Sign In Failed',
-        text2: 'Please check your email and password',
+        type: "error",
+        text1: "Sign In Failed",
+        text2: "Please check your email and password",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -53,7 +58,7 @@ const SignIn = () => {
               <Text className="text-2xl font-ibold mr-3">Hi, Welcome Back</Text>
               <HelloWave />
             </View>
-            <Text className="text-gray-500">
+            <Text className="text-gray-500 font-iregular">
               Hello again, you've been missed!
             </Text>
           </View>
@@ -67,7 +72,7 @@ const SignIn = () => {
             />
             <FormField
               title="Password"
-              placeholder="Enter your email"
+              placeholder="Enter your password"
               value={userInput.password}
               handleChangeText={(value) => handleChangeText("password", value)}
             />
@@ -81,6 +86,10 @@ const SignIn = () => {
             <TouchableOpacity
               className="bg-purple-800 py-3 rounded-xl items-center justify-center"
               onPress={handleSubmit}
+              disabled={isLoading}
+              style={{
+                opacity: isLoading ? 0.5 : 1,
+              }}
             >
               <Text className="text-white font-isemibold text-base">
                 Log In
@@ -89,9 +98,9 @@ const SignIn = () => {
           </View>
         </View>
         <View className="mt-auto">
-          <Text className="text-center text-black">
+          <Text className="text-center text-black font-iregular">
             Don't have an account?{" "}
-            <Link href={"/sign-up"} className="text-purple-600 font-bold">
+            <Link href={"/sign-up"} className="text-purple-600 font-ibold">
               Sign Up
             </Link>
           </Text>

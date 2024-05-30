@@ -1,4 +1,5 @@
 import { useCallback, useRef } from "react";
+import { StatusBar } from "expo-status-bar";
 import {
   ImageURISource,
   Pressable,
@@ -88,6 +89,7 @@ export default function App() {
           flatListRef={flatListRef}
         />
       </View>
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 }

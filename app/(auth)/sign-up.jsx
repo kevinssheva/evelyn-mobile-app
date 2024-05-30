@@ -15,6 +15,8 @@ const SignUp = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChangeText = (key, value) => {
     setUserInput({ ...userInput, [key]: value });
   };
@@ -22,6 +24,7 @@ const SignUp = () => {
   const auth = FIREBASE_AUTH;
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -46,6 +49,8 @@ const SignUp = () => {
         text1: 'Sign Up Failed',
         text2: 'Please check your email and password',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,7 +81,7 @@ const SignUp = () => {
             />
             <FormField
               title="Password"
-              placeholder="Enter your email"
+              placeholder="Enter your password"
               value={userInput.password}
               handleChangeText={(value) => handleChangeText("password", value)}
             />
@@ -90,6 +95,10 @@ const SignUp = () => {
             <TouchableOpacity
               className="bg-purple-800 py-3 rounded-xl items-center justify-center"
               onPress={handleSubmit}
+              disabled={isLoading}
+              style={{
+                opacity: isLoading ? 0.5 : 1,
+              }}
             >
               <Text className="text-white font-isemibold text-base">
                 Sign Up
@@ -98,9 +107,9 @@ const SignUp = () => {
           </View>
         </View>
         <View className="mt-auto">
-          <Text className="text-center text-black">
+          <Text className="text-center font-iregular text-black">
             Already have an account?{" "}
-            <Link href={"/sign-in"} className="text-purple-600 font-bold">
+            <Link href={"/sign-in"} className="text-purple-600 font-ibold">
               Sign In
             </Link>
           </Text>
