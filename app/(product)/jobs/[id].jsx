@@ -7,21 +7,41 @@ import {
   Button,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
-import Modal from "react-native-modal";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { getJobById } from "../../../services/JobService";
+import { applyJob, getJobById } from "../../../services/JobService";
+import { FIREBASE_AUTH } from "../../../config/firebaseConfig";
+import Toast from "react-native-toast-message";
 
 const JobDetails = () => {
   const { id } = useLocalSearchParams();
   const { job, loading } = getJobById(id);
+  const auth = FIREBASE_AUTH;
   const router = useRouter();
 
   if (loading) {
     return <ActivityIndicator size="large" color="#741CCB" />;
   }
+
+  const handleApplyJob = async () => {
+    try {
+      await applyJob(auth.currentUser.uid, id);
+      Toast.show({
+        type: "success",
+        text1: "Apply Success",
+        text2: "You have successfully applied for this job",
+      });
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Apply Failed",
+        text2: error,
+      });
+    }
+  };
 
   return (
     <View className="flex-1">
@@ -103,7 +123,7 @@ const JobDetails = () => {
       </ScrollView>
 
       <TouchableOpacity
-        onPress={() => {}}
+        onPress={() => handleApplyJob()}
         className="fixed bottom-0 bg-blue-900 w-full h-[7vh] items-center justify-center"
       >
         <Text className="font-bold text-[18px] text-white">Apply</Text>
